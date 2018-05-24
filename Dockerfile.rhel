@@ -1,0 +1,12 @@
+FROM registry.access.redhat.com/rhel7:7.4
+
+MAINTAINER Kilian Henneboehle "kilian.henneboehle@mailbox.org"
+
+RUN yum install -y atomic docker nc telnet traceroute scap-security-guide openscap-scanner openscap-utils tcpdump nmap-ncat iotop
+
+RUN groupadd -r debugger -g 1000 && useradd -u 1000 -r -g debugger -m -d /debugger -s /sbin/nologin -c "Debugger" debugger && \
+    chmod 755 /debugger
+
+WORKDIR /debugger
+
+USER debugger
